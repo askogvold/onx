@@ -29,9 +29,9 @@ workplace.on("enter", function(signal) {
 workplace.on("exit", function(signal) {
 	var now = new Date();
 	var remainingSeconds = (now.getTime() - workplaceEntry.getTime())/1000;
-	var hours = remainingSeconds / (60*60);
+	var hours = remainingSeconds / (60*60) >> 0;
 	remainingSeconds %= 60*60;
-	var minutes = remainingSeconds / 60;
+	var minutes = remainingSeconds / 60 >> 0;
 	remainingSeconds %= 60;
 	var seconds = remainingSeconds;
 
