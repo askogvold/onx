@@ -56,7 +56,7 @@ workplace.on("exit", function(signal) {
 var now = new Date();
 var timerStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
 var timerAction = function() {
-	workplaceEntry = 0;
+	dailyWorkplaceCounter = 0;
 };
 
 device.scheduler.setTimer(
