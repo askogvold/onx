@@ -19,14 +19,14 @@ var dailyWorkplaceCounter = 0;
 
 var workplaceEntry = new Date(0);
 
-workplace.on("enter", function(signal) {
+device.regions.on("enter", function(signal) {
 	dailyWorkplaceCounter += 1;
 	workplaceEntry = new Date();
 	var notification = device.notifications.createNotification("Entering workplace for the " + dailyWorkplaceCounter + ". time today. Enjoy!");
 	notification.show();
 });
 
-workplace.on("exit", function(signal) {
+device.regions.on("exit", function(signal) {
 	var now = new Date();
 	var remainingSeconds = (now.getTime() - workplaceEntry.getTime())/1000;
 	var hours = remainingSeconds / (60*60) >> 0;
