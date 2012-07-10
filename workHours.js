@@ -1,32 +1,34 @@
 /*
  *  Script to track my work hours automatically.
- *  Set up a 500m radius border around my workplace, and measuring the time spent within the area.
+ *  Set up a 200m radius border around my workplace, and measuring the time spent within the area.
  *
  *  Testing on my way to work tomorrow :-)
  */
 
 
-var myEmail = "mail@example.com";
+var location = { name : "Work",latitude : "55.7297654",longitude : "37.6790519" } ;
+var myEmail = "you_mail@gmail.com"; // shuld be your email
 
-var workplace = device.regions.createRegion({
-	name:"Rotvoll", 
-	latitude:  63.43915607186877, 
-	longitude: 10.480849756066846, 
-	radius:    500
-});
+var work = device.regions.createRegion({
+        latitude: parseFloat(location.latitude, 10),
+        longitude: parseFloat(location.longitude, 10),
+        name: location.name,
+        radius: 200
+    });
 
+    
 var dailyWorkplaceCounter = 0;
 
 var workplaceEntry = new Date(0);
-
-workplace.on("enter", function(signal) {
-	dailyWorkplaceCounter += 1;
+// register a callback which sends a message when entering/exiting the region (depends on action)
+    work.on("enter", function(signal) {
+    dailyWorkplaceCounter += 1;
 	workplaceEntry = new Date();
 	var notification = device.notifications.createNotification("Entering workplace for the " + dailyWorkplaceCounter + ". time today. Enjoy!");
 	notification.show();
 });
 
-workplace.on("exit", function(signal) {
+work.on("exit", function(signal) {
 	var now = new Date();
 	var remainingSeconds = (now.getTime() - workplaceEntry.getTime())/1000;
 	var hours = remainingSeconds / (60*60) >> 0;
@@ -69,4 +71,5 @@ device.scheduler.setTimer(
 	}, 
 	timerAction);
 
-device.regions.startMonitoring(workplace);
+console.info('Start monitoring...');
+device.regions.startMonitoring(work);
